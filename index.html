@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeowAgent - Think in Layers</title>
+    <meta name="description" content="双模型 AI Agent，量子架构 + 分层记忆 + 智能路由">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 顶部公告 -->
+    <div class="announcement-bar">
+        <span class="version-badge">v0.3.0 量子架构版</span>
+        <span>单会话永不失忆 · Token 恒定制 · 技能自生长</span>
+        <span class="ad-hint">支持开源，请关闭广告屏蔽 ⭐</span>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">🐱</span>
+                <span class="logo-text">MeowAgent</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="#features">特性</a>
+                <a href="#how-it-works">原理</a>
+                <a href="#quick-start">快速开始</a>
+                <a href="#cli">命令</a>
+                <a href="#community">社区</a>
+            </div>
+            <div class="nav-actions">
+                <a href="https://github.com/Axonant/MeowAgent" target="_blank" class="nav-link-icon" title="GitHub">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                </a>
+                <a href="https://gitee.com/axonant/MeowAgent" target="_blank" class="nav-link-icon" title="Gitee">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.984 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.016 0zm6.09 5.333c.328 0 .593.266.592.593v1.482a.594.594 0 01-.593.592H9.777c-.982 0-1.778.796-1.778 1.778v5.63c0 .327.266.592.593.592h5.63c.327 0 .593-.265.593-.593v-1.481a.593.593 0 00-.593-.593h-3.556a.593.593 0 01-.593-.593V9.778c0-.327.266-.593.593-.593h5.333c.327 0 .593.266.593.593v6.815a2.37 2.37 0 01-2.37 2.37H6.518a.593.593 0 01-.593-.593V9.778a4.444 4.444 0 014.444-4.445h7.705z"/></svg>
+                </a>
+                <a href="http://www.meowagent.top" target="_blank" class="btn btn-primary btn-sm">官网</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="菜单">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="quantum-particles" id="particles"></div>
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">量子架构 · 恒定制记忆</div>
+            <h1 class="hero-title">
+                <span class="title-main">Think in Layers</span>
+                <span class="title-sub">分层思考</span>
+            </h1>
+            <p class="hero-desc">
+                双模型 AI Agent — <strong>A</strong> 像小脑快速路由，<strong>B</strong> 像大脑深度思考<br>
+                单会话永不失忆，Token 消耗恒定，技能自动生长
+            </p>
+            <div class="hero-actions">
+                <a href="#quick-start" class="btn btn-primary btn-lg">🚀 快速开始</a>
+                <a href="https://github.com/Axonant/MeowAgent" target="_blank" class="btn btn-outline btn-lg">查看源码</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item"><span class="stat-value">v0.3.0</span><span class="stat-label">最新版本</span></div>
+                <div class="stat-item"><span class="stat-value">320+</span><span class="stat-label">测试用例</span></div>
+                <div class="stat-item"><span class="stat-value">MIT</span><span class="stat-label">开源许可</span></div>
+            </div>
+        </div>
+        <div class="ad-slot ad-banner" data-position="hero-below">
+            <span class="ad-label">广告</span>
+            <div class="ad-placeholder">728 × 90</div>
+        </div>
+    </section>
+
+    <!-- 核心卖点 -->
+    <section class="highlights">
+        <div class="container">
+            <div class="highlight-grid">
+                <div class="highlight-card">
+                    <div class="highlight-icon">🧠</div>
+                    <h3>单会话永不失忆</h3>
+                    <p>L1-L6 六层记忆体系，恒定制坍缩检索，聊 1000 轮 context 仍保持固定</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">💰</div>
+                    <h3>省 90%+ Token</h3>
+                    <p>小模型 A 本地处理简单任务，大模型 B 仅处理复杂问题，智能路由节省成本</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">📈</div>
+                    <h3>技能自生长</h3>
+                    <p>重复模式 ≥3 次自动结晶为 Skill，你的习惯变成永久能力</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">🔒</div>
+                    <h3>本地优先安全</h3>
+                    <p>数据完全本地存储，白名单 + 会话权限 + 临时模式（阅后即焚）</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特性展示 -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">✨ 核心特性</h2>
+                <p class="section-desc">量子架构 + 双脑路由 + 分层记忆</p>
+            </div>
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <div class="feature-icon-wrap quantum-glow">🪐</div>
+                    <h3>量子记忆</h3>
+                    <ul>
+                        <li><strong>纠缠图</strong> — 记忆间自动关联，形成知识网络</li>
+                        <li><strong>观测坍缩</strong> — 每轮独立观测，坍缩出 Top-K 相关记忆</li>
+                        <li><strong>退相干遗忘</strong> — coherence 低于阈值自动归档</li>
+                    </ul>
+                    <div class="feature-tag">恒定制：每轮 context 永远不超过固定 Token</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap brain-glow">🤖</div>
+                    <h3>双脑路由</h3>
+                    <ul>
+                        <li><strong>A 模型（小脑）</strong> — 本地快速路由判断，处理简单任务</li>
+                        <li><strong>B 模型（大脑）</strong> — 大模型深度推理，解决复杂问题</li>
+                        <li><strong>启发式学习</strong> — B 的决策沉淀为 A 的规则，越用越聪明</li>
+                    </ul>
+                    <div class="feature-tag">A 直接处理 + Skill/MCP = 极少调用 B</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap layers-glow">📦</div>
+                    <h3>六层记忆</h3>
+                    <ul>
+                        <li><strong>L1-L2 共享</strong> — 用户信息、画像跨会话共享</li>
+                        <li><strong>L3-L6 会话独立</strong> — 身份、知识、归档、原始日志</li>
+                        <li><strong>知识库模式</strong> — L4/L5/L6 按目录隔离</li>
+                    </ul>
+                    <div class="feature-tag">分层存储确保信息不丢失也不过载</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap skill-glow">⚡</div>
+                    <h3>技能自生长</h3>
+                    <ul>
+                        <li><strong>内置 Skill</strong> — 文件操作、天气查询、网络搜索</li>
+                        <li><strong>自生长</strong> — 重复模式 ≥3 次自动生成 Skill 模板</li>
+                        <li><strong>MCP 支持</strong> — 自动发现和使用外部工具</li>
+                    </ul>
+                    <div class="feature-tag">你的习惯自动结晶为可复用能力</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工作原理 -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🚀 工作原理</h2>
+                <p class="section-desc">用户输入 → 观测坍缩 → 智能路由 → 执行反馈</p>
+            </div>
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <div class="step-icon">👤</div>
+                    <h4>用户输入</h4>
+                    <p>提出问题或任务</p>
+                </div>
+                <div class="flow-arrow"></div>
+                <div class="flow-step flow-highlight">
+                    <div class="step-icon">🔍</div>
+                    <h4>A 量子观测</h4>
+                    <p>观测 L1-L6<br>坍缩 ≤5 条记忆</p>
+                </div>
+                <div class="flow-arrow"></div>
+                <div class="flow-step">
+                    <div class="step-icon">📋</div>
+                    <h4>出执行计划</h4>
+                    <p>~50 token<br>本地免费</p>
+                </div>
+                <div class="flow-arrow"></div>
+                <div class="flow-step flow-routing">
+                    <div class="step-icon">🔀</div>
+                    <h4>智能路由</h4>
+                    <div class="route-options">
+                        <span>Skill</span><span>MCP</span><span>A直接</span><span>B执行</span>
+                    </div>
+                </div>
+                <div class="flow-arrow"></div>
+                <div class="flow-step">
+                    <div class="step-icon">💾</div>
+                    <h4>更新记忆</h4>
+                    <p>反馈闭环</p>
+                </div>
+            </div>
+            <div class="ad-slot ad-rect" data-position="flow-below">
+                <span class="ad-label">广告</span>
+                <div class="ad-placeholder">300 × 250</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 快速开始 -->
+    <section class="quick-start" id="quick-start">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">⚡ 快速开始</h2>
+                <p class="section-desc">三步完成安装与配置</p>
+            </div>
+            <div class="install-steps">
+                <div class="install-step">
+                    <div class="step-number">1</div>
+                    <h4>安装</h4>
+                    <div class="code-block">
+                        <div class="code-header"><span>macOS / Linux</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                        <pre><code>bash -c "$(curl -fsSL https://raw.githubusercontent.com/Axonant/MeowAgent/main/scripts/install.sh)"</code></pre>
+                    </div>
+                    <div class="code-block" style="margin-top:8px">
+                        <div class="code-header"><span>然后</span></div>
+                        <pre><code>source ~/.bashrc   # or ~/.zshrc</code></pre>
+                    </div>
+                </div>
+                <div class="install-step">
+                    <div class="step-number">2</div>
+                    <h4>配置模型</h4>
+                    <div class="code-block">
+                        <div class="code-header"><span>交互式配置</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                        <pre><code>meowagent --config</code></pre>
+                    </div>
+                    <p class="step-note">添加本地模型 (A) 和 API 模型 (B)</p>
+                </div>
+                <div class="install-step">
+                    <div class="step-number">3</div>
+                    <h4>开始对话</h4>
+                    <div class="code-block">
+                        <div class="code-header"><span>启动</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                        <pre><code>meowagent</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="model-support">
+                <h4>支持的模型</h4>
+                <div class="model-grid">
+                    <div class="model-item"><span class="model-name">OpenAI</span><span class="model-desc">GPT-4, GPT-3.5</span></div>
+                    <div class="model-item"><span class="model-name">DeepSeek</span><span class="model-desc">深度求索</span></div>
+                    <div class="model-item"><span class="model-name">通义千问</span><span class="model-desc">Qwen 系列</span></div>
+                    <div class="model-item"><span class="model-name">Claude</span><span class="model-desc">Anthropic</span></div>
+                    <div class="model-item"><span class="model-name">Gemini</span><span class="model-desc">Google</span></div>
+                    <div class="model-item"><span class="model-name">Ollama</span><span class="model-desc">本地模型 (A)</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLI 命令 -->
+    <section class="cli-section" id="cli">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">💻 命令参考</h2>
+                <p class="section-desc">30+ 子命令，覆盖对话、模型、记忆、技能、浏览器等</p>
+            </div>
+            <div class="cli-grid">
+                <div class="cli-card">
+                    <h4>💬 对话</h4>
+                    <ul class="cli-list">
+                        <li><code>meowagent</code> 启动交互式聊天</li>
+                        <li><code>meowagent chat --new</code> 创建新会话</li>
+                        <li><code>meowagent chat --list</code> 列出会话</li>
+                        <li><code>meowagent chat --switch</code> 切换会话</li>
+                    </ul>
+                </div>
+                <div class="cli-card">
+                    <h4>🤖 模型</h4>
+                    <ul class="cli-list">
+                        <li><code>meowagent model</code> 交互式配置</li>
+                        <li><code>meowagent model add --for a</code> 添加 A 模型</li>
+                        <li><code>meowagent model add --for b</code> 添加 B 模型</li>
+                        <li><code>meowagent model test</code> 测试连接</li>
+                    </ul>
+                </div>
+                <div class="cli-card">
+                    <h4>🧠 记忆</h4>
+                    <ul class="cli-list">
+                        <li><code>meowagent memory list</code> 列出记忆</li>
+                        <li><code>meowagent memory export</code> 导出</li>
+                        <li><code>meowagent memory rebuild</code> 重建 L3</li>
+                        <li><code>meowagent knowledge</code> 知识库模式</li>
+                    </ul>
+                </div>
+                <div class="cli-card">
+                    <h4>⚡ 技能 & MCP</h4>
+                    <ul class="cli-list">
+                        <li><code>meowagent skill list</code> 列出技能</li>
+                        <li><code>meowagent mcp list</code> 列出 MCP 工具</li>
+                    </ul>
+                </div>
+                <div class="cli-card">
+                    <h4>🌐 多平台</h4>
+                    <ul class="cli-list">
+                        <li><code>meowagent platform add</code> 添加平台</li>
+                        <li><code>meowagent serve</code> 启动服务器</li>
+                        <li><code>meowagent browser open</code> 打开网页</li>
+                    </ul>
+                </div>
+                <div class="cli-card">
+                    <h4>🔧 系统</h4>
+                    <ul class="cli-list">
+                        <li><code>meowagent update</code> 更新版本</li>
+                        <li><code>meowagent doctor</code> 环境检查</li>
+                        <li><code>meowagent language set zh</code> 切换中文</li>
+                        <li><code>meowagent stats</code> 对话统计</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="ad-slot ad-banner" data-position="cli-below">
+                <span class="ad-label">广告</span>
+                <div class="ad-placeholder">728 × 90</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 版本历史 -->
+    <section class="versions" id="versions">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">📅 版本历史</h2>
+                <p class="section-desc">从 v0.1.0 到 v0.3.0 的演进</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker current"></div>
+                    <div class="timeline-content">
+                        <div class="version-header"><span class="version-number">v0.3.0</span><span class="version-tag tag-current">量子架构</span></div>
+                        <p class="version-date">2026-04-24</p>
+                        <ul class="version-features"><li>量子核心：纠缠图 + 观测坍缩 + 退相干</li><li>恒定制：每轮 context 固定，永不爆炸</li><li>B 模型降级 + 冷启动优化</li><li>多设备同步 + 数据管理</li></ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="version-header"><span class="version-number">v0.2.2</span><span class="version-tag">CLI 体验</span></div>
+                        <p class="version-date">2026-04-24</p>
+                        <ul class="version-features"><li>CLI 体验全面升级：TUI、流式输出、Tab 补全</li><li>自运维体系增强、提示词管理</li></ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="version-header"><span class="version-number">v0.2.1</span><span class="version-tag">核心增强</span></div>
+                        <p class="version-date">2026-04-23</p>
+                        <ul class="version-features"><li>18 项需求：A 路由增强、Skill 自生长</li><li>多平台消息、浏览器控制、语音支持</li></ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="version-header"><span class="version-number">v0.2.0</span><span class="version-tag">增强版</span></div>
+                        <p class="version-date">2026-04-23</p>
+                        <ul class="version-features"><li>交互式模型配置、B 摘要机制、话题存储</li><li>主动触达系统、会话权限</li></ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="version-header"><span class="version-number">v0.1.0</span><span class="version-tag">基础版</span></div>
+                        <p class="version-date">2026-04-20</p>
+                        <ul class="version-features"><li>A/B 双模型 + L1-L6 分层记忆</li><li>最小可行产品</li></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 社区 -->
+    <section class="community" id="community">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🤝 社区与支持</h2>
+                <p class="section-desc">加入 MeowAgent 社区，一起成长</p>
+            </div>
+            <div class="community-grid">
+                <div class="community-card">
+                    <div class="community-icon">📧</div>
+                    <h4>联系邮箱</h4>
+                    <p>qyiun666@163.com</p>
+                    <p class="community-note">合作 · 定制 · 商业支持</p>
+                </div>
+                <div class="community-card">
+                    <div class="community-icon">💬</div>
+                    <h4>微信群</h4>
+                    <div class="wechat-qr">
+                        <img src="https://placehold.co/160x160/f3f4f6/6366f1?text=微信群" alt="微信群二维码">
+                    </div>
+                    <p class="community-note">扫码加入讨论群</p>
+                </div>
+                <div class="community-card">
+                    <div class="community-icon">⭐</div>
+                    <h4>开源仓库</h4>
+                    <div class="repo-links">
+                        <a href="https://github.com/Axonant/MeowAgent" target="_blank">GitHub</a>
+                        <a href="https://gitee.com/axonant/MeowAgent" target="_blank">Gitee</a>
+                    </div>
+                    <p class="community-note">Star 是最大的鼓励</p>
+                </div>
+                <div class="community-card">
+                    <div class="community-icon">🤝</div>
+                    <h4>贡献指南</h4>
+                    <p>Fork → Feature Branch → PR</p>
+                    <p class="community-note">欢迎提交功能和 Bug 报告</p>
+                </div>
+            </div>
+            <div class="ad-slot ad-banner" data-position="footer-above">
+                <span class="ad-label">广告</span>
+                <div class="ad-placeholder">728 × 90</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">🐱 MeowAgent</div>
+                    <p>Think in Layers. Fast when simple, deep when complex, smarter every day.</p>
+                    <p class="footer-license">MIT License</p>
+                </div>
+                <div class="footer-col">
+                    <h5>快速链接</h5>
+                    <a href="#features">核心特性</a>
+                    <a href="#how-it-works">工作原理</a>
+                    <a href="#quick-start">快速开始</a>
+                    <a href="#cli">命令参考</a>
+                    <a href="#versions">版本历史</a>
+                </div>
+                <div class="footer-col">
+                    <h5>项目</h5>
+                    <a href="https://github.com/Axonant/MeowAgent" target="_blank">GitHub</a>
+                    <a href="https://gitee.com/axonant/MeowAgent" target="_blank">Gitee</a>
+                    <a href="http://www.meowagent.top" target="_blank">官网</a>
+                </div>
+                <div class="footer-col">
+                    <h5>联系</h5>
+                    <a href="mailto:qyiun666@163.com">qyiun666@163.com</a>
+                    <p>组织：Axonant</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Axonant. MeowAgent — Think in Layers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
