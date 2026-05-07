@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeowCat 框架 — Bio-Neural AI Agent Framework</title>
+    <meta name="description" content="MeowCat 框架完整介绍：20 器官体系、Slot-Plug 架构、四层信号系统、Colony 多猫、生物级防御">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar scrolled" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon-svg">
+                    <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+                        <circle cx="16" cy="16" r="15" stroke="url(#logoGrad)" stroke-width="2"/>
+                        <path d="M8 20c4-6 12-6 16 0" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="11" cy="13" r="2" fill="#a855f7"/><circle cx="21" cy="13" r="2" fill="#a855f7"/>
+                        <defs><linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#a855f7"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs>
+                    </svg>
+                </span>
+                <span class="logo-text" data-i18n="logo">MeowAgent</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" data-i18n="nav-home">首页</a>
+                <div class="nav-dropdown">
+                    <a href="framework.html" class="nav-dropdown-toggle active" data-i18n="nav-meowcat">MeowCat</a>
+                    <div class="nav-dropdown-menu">
+                        <a href="#mc-why" data-i18n="nav-mc-why">为什么</a>
+                        <a href="#mc-think" data-i18n="nav-mc-think">思考</a>
+                        <a href="#mc-arch" data-i18n="nav-mc-arch">架构</a>
+                        <a href="#mc-features" data-i18n="nav-mc-features">亮点</a>
+                        <a href="#mc-colony" data-i18n="nav-mc-colony">Colony</a>
+                        <a href="#mc-quickstart" data-i18n="nav-mc-quickstart">快速开始</a>
+                    </div>
+                </div>
+                <a href="agent.html" data-i18n="nav-agent">MeowAgent</a>
+                <a href="index.html#contact" data-i18n="nav-contact">联系我们</a>
+            </div>
+            <div class="nav-actions">
+                <button class="lang-toggle" id="langToggle" title="Switch Language">
+                    <span class="lang-label">EN</span>
+                </button>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="菜单">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-hero">
+        <div class="container">
+            <span class="section-tag" data-i18n="mc-hero-tag">Framework Deep Dive</span>
+            <h1 class="page-title" data-i18n="mc-hero-title">MeowCat 框架详解</h1>
+            <p class="page-subtitle" data-i18n="mc-hero-subtitle">纯抽象的 AI Agent 骨架 — 定义结构、连接、信号规则，不写任何具体逻辑</p>
+            <div class="page-meta">
+                <span class="meta-badge">Python 3.10+</span>
+                <span class="meta-badge">MIT License</span>
+                <span class="meta-badge">Zero I/O Core</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 一句话定位 -->
+    <section class="content-section">
+        <div class="container container-sm">
+            <h2 data-i18n="mc-quote-heading">一句话定位</h2>
+            <div class="quote-box">
+                <p data-i18n="mc-quote">MeowCat 是<strong>纯抽象的 AI Agent 骨架</strong>。它只定义「猫有什么器官、器官间怎么连」，不写任何具体逻辑。你来实现每个器官的具体行为 — LLM 推理、记忆存储、安全检查、工具执行。</p>
+                <p class="quote-sub" data-i18n="mc-quote-sub">独立 pip 包，零外部依赖。框架定义骨架，你来选择材料。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why -->
+    <section class="content-section content-alt">
+        <div class="container">
+            <div class="mc-subsection" id="mc-why">
+                <h3 class="mc-subtitle" data-i18n="mc-why-title">Agent 应该是什么样的？</h3>
+                <div class="compare-philosophy">
+                    <div class="philosophy-col">
+                        <h4 class="philosophy-label bad" data-i18n="mc-why-harness">❌ 传统 Harness 模式</h4>
+                        <div class="philosophy-card">
+                            <p data-i18n="mc-why-harness-desc">LLM → 挂工具 → 编排工作流。Agent 是功能单元，约束靠 prompt guard。</p>
+                        </div>
+                    </div>
+                    <div class="philosophy-vs"><span>VS</span></div>
+                    <div class="philosophy-col">
+                        <h4 class="philosophy-label good" data-i18n="mc-why-bio">✅ MeowCat 生命体模式</h4>
+                        <div class="philosophy-card philosophy-card-good">
+                            <p data-i18n="mc-why-bio-desc">器官 → 角色约束 → 神经信号 → 行为涌现。架构层硬约束，行为自然产生。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Think -->
+    <section class="content-section">
+        <div class="container">
+            <div class="mc-subsection" id="mc-think">
+                <h3 class="mc-subtitle" data-i18n="mc-think-title">核心设计思想</h3>
+                <p class="mc-subdesc" data-i18n="mc-think-desc">为什么用生物神经范式？从第一性原理重新思考 AI Agent 的构建方式</p>
+                <div class="think-grid">
+                    <div class="think-card">
+                        <div class="think-icon">🧬</div>
+                        <h4 data-i18n="mc-think-1-title">生命体 > 工具链</h4>
+                        <p data-i18n="mc-think-1-desc">Agent 不是工具的组合，而是一个完整的生命体。器官各司其职，行为从架构层自然涌现，而非靠 prompt 堆砌。</p>
+                    </div>
+                    <div class="think-card">
+                        <div class="think-icon">🔒</div>
+                        <h4 data-i18n="mc-think-2-title">硬约束 > 软提示</h4>
+                        <p data-i18n="mc-think-2-desc">安全不该依赖 prompt。架构层的禁止边、熔断器、Amygdala 旁路，让约束铁打不动。</p>
+                    </div>
+                    <div class="think-card">
+                        <div class="think-icon">🕸️</div>
+                        <h4 data-i18n="mc-think-3-title">记忆是图，不是向量</h4>
+                        <p data-i18n="mc-think-3-desc">实体-关联-事件三元组 + 六层衰减，这才是真正的记忆。扁平向量库做不到。</p>
+                    </div>
+                    <div class="think-card">
+                        <div class="think-icon">📈</div>
+                        <h4 data-i18n="mc-think-4-title">越用越强，而非越用越贵</h4>
+                        <p data-i18n="mc-think-4-desc">双闭环生长：技能结晶、角色涌现、反思进化。习惯变成永久能力，不靠堆 token。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 20 器官体系 -->
+    <section class="content-section content-alt">
+        <div class="container">
+            <div class="mc-subsection" id="mc-arch">
+                <h3 class="mc-subtitle" data-i18n="mc-arch-title">20 个器官 · 5 大分类</h3>
+                <p class="mc-subdesc" data-i18n="mc-arch-desc">模拟猫的真实神经解剖学，每个器官有明确的角色、入口/出口规则</p>
+                <div class="organ-grid">
+                    <div class="organ-category">
+                        <h4 data-i18n="mc-org-brain">🧠 BRAIN 脑区</h4>
+                        <div class="organ-list">
+                            <div class="organ-item" data-i18n="mc-org-cerebrum"><strong>Cerebrum 大脑</strong><span>LLM 深度推理</span></div>
+                            <div class="organ-item" data-i18n="mc-org-cerebellum"><strong>Cerebellum 小脑</strong><span>效应器唯一网关</span></div>
+                            <div class="organ-item" data-i18n="mc-org-amygdala"><strong>Amygdala 杏仁核</strong><span>安全旁路，危险时跳过推理</span></div>
+                            <div class="organ-item" data-i18n="mc-org-hippocampus"><strong>Hippocampus 海马体</strong><span>实体图记忆</span></div>
+                            <div class="organ-item" data-i18n="mc-org-thalamus"><strong>Thalamus 丘脑</strong><span>感觉中继枢纽</span></div>
+                            <div class="organ-item" data-i18n="mc-org-hypothalamus"><strong>Hypothalamus 下丘脑</strong><span>记忆衰减 + 清理</span></div>
+                            <div class="organ-item" data-i18n="mc-org-frontal"><strong>Frontal 前额叶</strong><span>意图解析</span></div>
+                            <div class="organ-item" data-i18n="mc-org-cortex"><strong>Cortex 皮质</strong><span>L0→L3 认知管道</span></div>
+                            <div class="organ-item" data-i18n="mc-org-brainstem"><strong>Brainstem 脑干</strong><span>自主反射</span></div>
+                        </div>
+                    </div>
+                    <div class="organ-category">
+                        <h4 data-i18n="mc-org-sense">👂 SENSE 感官</h4>
+                        <div class="organ-list">
+                            <div class="organ-item" data-i18n="mc-org-ears"><strong>Ears 耳</strong><span>文本/语音输入</span></div>
+                            <div class="organ-item" data-i18n="mc-org-eyes"><strong>Eyes 眼</strong><span>视觉/图像感知</span></div>
+                            <div class="organ-item" data-i18n="mc-org-whiskers"><strong>Whiskers 须</strong><span>盲点检测</span></div>
+                        </div>
+                    </div>
+                    <div class="organ-category">
+                        <h4 data-i18n="mc-org-voice">🗣️ VOICE 嗓音</h4>
+                        <div class="organ-list">
+                            <div class="organ-item" data-i18n="mc-org-mouth"><strong>Mouth 口</strong><span>输出回复</span></div>
+                            <div class="organ-item" data-i18n="mc-org-purr"><strong>Purr 呼噜</strong><span>流式输出</span></div>
+                            <div class="organ-item" data-i18n="mc-org-tail"><strong>Tail 尾</strong><span>状态指示</span></div>
+                        </div>
+                    </div>
+                    <div class="organ-category">
+                        <h4 data-i18n="mc-org-storage">💾 STORAGE 存储</h4>
+                        <div class="organ-list">
+                            <div class="organ-item" data-i18n="mc-org-entitystore"><strong>EntityStore</strong><span>实体图持久化</span></div>
+                            <div class="organ-item" data-i18n="mc-org-sharedstore"><strong>SharedStore</strong><span>Colony 共享存储</span></div>
+                        </div>
+                    </div>
+                    <div class="organ-category">
+                        <h4 data-i18n="mc-org-growth">🌱 GROWTH 生长</h4>
+                        <div class="organ-list">
+                            <div class="organ-item" data-i18n="mc-org-pineal"><strong>PinealGland 松果体</strong><span>融合周期触发</span></div>
+                            <div class="organ-item" data-i18n="mc-org-crystallizer"><strong>Crystallizer 结晶器</strong><span>技能模板生成</span></div>
+                            <div class="organ-item" data-i18n="mc-org-roleemergence"><strong>RoleEmergence</strong><span>角色自然分工</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slot-Plug -->
+    <section class="content-section">
+        <div class="container container-sm">
+            <div class="mc-subsection" id="mc-features">
+                <h3 class="mc-subtitle" data-i18n="mc-feat-title">Slot-Plug · 四层信号 · 生物防御 · 双闭环</h3>
+                <div class="plug-styles">
+                    <div class="plug-style">
+                        <span class="ps-badge">ALGORITHM</span>
+                        <p>纯算法实现，无外部依赖。如 Brainstem 自主反射。</p>
+                    </div>
+                    <div class="plug-style">
+                        <span class="ps-badge">RULE</span>
+                        <p>规则引擎实现，声明式配置。如 Amygdala 安全策略。</p>
+                    </div>
+                    <div class="plug-style">
+                        <span class="ps-badge">MODEL</span>
+                        <p>LLM/ML 模型实现。如 Cerebrum 调用 GPT-4 / DeepSeek。</p>
+                    </div>
+                    <div class="plug-style">
+                        <span class="ps-badge">HYBRID</span>
+                        <p>混合实现，组合多种风格。如 Hippocampus 图存储 + 向量检索。</p>
+                    </div>
+                </div>
+                <div class="feature-cards-sm" style="margin-top:24px">
+                    <div class="fcs">
+                        <h4 data-i18n="mc-feat-1">🔌 Slot-Plug 架构</h4>
+                        <p data-i18n="mc-feat-1-desc">框架定义 Slot（Protocol），你提供 Plug（实现）。4 种风格：ALGORITHM | RULE | MODEL | HYBRID</p>
+                    </div>
+                    <div class="fcs">
+                        <h4 data-i18n="mc-feat-2">📶 四层信号系统</h4>
+                        <p data-i18n="mc-feat-2-desc">Path → Chain → Loop → LoopSequence。从原子信号到编排，层层组合</p>
+                    </div>
+                    <div class="fcs">
+                        <h4 data-i18n="mc-feat-3">🛡️ 生物级防御</h4>
+                        <p data-i18n="mc-feat-3-desc">Amygdala 安全旁路 · 熔断器 · 禁止边 · Kittens 权限视图</p>
+                    </div>
+                    <div class="fcs">
+                        <h4 data-i18n="mc-feat-4">🔄 双闭环生长</h4>
+                        <p data-i18n="mc-feat-4-desc">内环 CatSelf 反思进化，外环 Colony 集体生长。猫越用越聪明</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 四层信号系统 -->
+    <section class="content-section content-alt">
+        <div class="container container-sm">
+            <h2 data-i18n="mc-signal-heading">四层执行模型</h2>
+            <p class="section-intro" data-i18n="mc-signal-intro">从原子到编排，层层组合。不是工作流定义，而是神经系统架构。</p>
+            <div class="signal-layers">
+                <div class="signal-layer">
+                    <div class="sl-num">L1</div>
+                    <div class="sl-body">
+                        <h4 data-i18n="mc-signal-l1-name">Path 原子信号</h4>
+                        <p data-i18n="mc-signal-l1-desc">器官间的单向信号传递。31 条内置路径。如 EARS → THALAMUS.hear。</p>
+                    </div>
+                </div>
+                <div class="signal-layer">
+                    <div class="sl-num">L2</div>
+                    <div class="sl-body">
+                        <h4 data-i18n="mc-signal-l2-name">Chain 序列 + 回滚</h4>
+                        <p data-i18n="mc-signal-l2-desc">多个 Path 的顺序执行，失败自动回滚。8 条内置链条。如感知 → 路由 → 执行。</p>
+                    </div>
+                </div>
+                <div class="signal-layer">
+                    <div class="sl-num">L3</div>
+                    <div class="sl-body">
+                        <h4 data-i18n="mc-signal-l3-name">Loop 触发 + 退出 + 事件</h4>
+                        <p data-i18n="mc-signal-l3-desc">条件触发的循环，有明确的进入/退出条件。7 条内置循环。如生长闭环、反思闭环。</p>
+                    </div>
+                </div>
+                <div class="signal-layer">
+                    <div class="sl-num">L4</div>
+                    <div class="sl-body">
+                        <h4 data-i18n="mc-signal-l4-name">LoopSequence 编排</h4>
+                        <p data-i18n="mc-signal-l4-desc">多个 Loop 的顺序编排。如维护序列：清理→蒸馏→生长。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Colony -->
+    <section class="content-section">
+        <div class="container">
+            <div class="mc-subsection" id="mc-colony">
+                <h3 class="mc-subtitle" data-i18n="mc-colony-title">Colony 多猫系统</h3>
+                <p class="mc-subdesc" data-i18n="mc-colony-desc">猫舍大看板共享 · 单人宿舍私有 · 角色自然分工</p>
+                <div class="colony-visual">
+                    <div class="colony-board">
+                        <div class="colony-board-header">🏠 <span data-i18n="mc-colony-board">猫舍大看板 · Shared Board</span></div>
+                        <div class="colony-board-items">
+                            <div class="cbi"><span class="cbi-icon">👤</span> <span data-i18n="mc-colony-1">用户画像</span></div>
+                            <div class="cbi"><span class="cbi-icon">📋</span> <span data-i18n="mc-colony-2">猫舍规则</span></div>
+                            <div class="cbi"><span class="cbi-icon">📚</span> <span data-i18n="mc-colony-3">共享知识</span></div>
+                            <div class="cbi"><span class="cbi-icon">🐱</span> <span data-i18n="mc-colony-4">猫列表</span></div>
+                            <div class="cbi"><span class="cbi-icon">🌱</span> <span data-i18n="mc-colony-5">集体生长</span></div>
+                        </div>
+                    </div>
+                    <div class="colony-rooms">
+                        <div class="colony-room"><div class="room-header">🐱 <span data-i18n="mc-colony-room">宿舍</span> 01</div><div class="room-items"><span>CatSelf</span><span>ScribblePad</span><span>实体图</span></div></div>
+                        <div class="colony-room"><div class="room-header">🐱 <span data-i18n="mc-colony-room">宿舍</span> 02</div><div class="room-items"><span>CatSelf</span><span>ScribblePad</span><span>实体图</span></div></div>
+                        <div class="colony-room"><div class="room-header">🐱 <span data-i18n="mc-colony-room">宿舍</span> 03</div><div class="room-items"><span>CatSelf</span><span>ScribblePad</span><span>实体图</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start -->
+    <section class="content-section content-alt">
+        <div class="container">
+            <div class="mc-subsection" id="mc-quickstart">
+                <h3 class="mc-subtitle" data-i18n="mc-qs-title">快速开始</h3>
+                <div class="install-steps">
+                    <div class="install-step">
+                        <div class="step-number">01</div>
+                        <div class="step-content">
+                            <h4 data-i18n="mc-qs-step1">安装框架</h4>
+                            <div class="code-block">
+                                <div class="code-header"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span><span class="code-label">Terminal</span><button class="copy-btn" onclick="copyCode(this)" data-i18n="code-copy-btn">复制</button></div>
+                                <pre><code>pip install meowcat</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="install-step">
+                        <div class="step-number">02</div>
+                        <div class="step-content">
+                            <h4 data-i18n="mc-qs-step2">创建 Colony + Cat</h4>
+                            <div class="code-block">
+                                <div class="code-header"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span><span class="code-label">Python</span><button class="copy-btn" onclick="copyCode(this)" data-i18n="code-copy-btn">复制</button></div>
+                                <pre><code>from meowcat.defaults import create_cat
+from meowcat.colony import Colony
+colony = Colony()
+cat = create_cat(container=colony,
+    cerebrum=YourImpl(), name="Kitty")</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="install-step">
+                        <div class="step-number">03</div>
+                        <div class="step-content">
+                            <h4 data-i18n="mc-qs-step3">感知世界</h4>
+                            <div class="code-block">
+                                <div class="code-header"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span><span class="code-label">Python</span><button class="copy-btn" onclick="copyCode(this)" data-i18n="code-copy-btn">复制</button></div>
+                                <pre><code>response = await cat.perceive("你好！")
+print(response)</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mc-cta-row">
+                    <a href="https://github.com/qyiun666/meowcat" target="_blank" class="btn btn-primary btn-lg">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        <span data-i18n="mc-cta-star">给个 Star ⭐</span>
+                    </a>
+                    <a href="https://pypi.org/project/meowcat/" target="_blank" class="btn btn-glass btn-lg">
+                        <span data-i18n="mc-cta-pypi">📦 PyPI</span>
+                    </a>
+                    <a href="https://github.com/Axonant/MeowAgent" target="_blank" class="btn btn-outline btn-lg" data-i18n="mc-cta-agent">🤖 MeowAgent 旗舰</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-brand">
+                    <div class="footer-logo"><span>🐱</span> <span data-i18n="footer-logo">MeowAgent</span></div>
+                    <p class="footer-tagline" data-i18n="footer-tagline">Think in Layers. Build with Joy.<br>Bio-Neural AI Agent Framework</p>
+                    <p class="footer-license">MIT License · © 2026</p>
+                </div>
+                <div class="footer-col">
+                    <h5 data-i18n="footer-mc">MeowCat 框架</h5>
+                    <a href="#mc-why" data-i18n="footer-mc-why">为什么</a>
+                    <a href="#mc-think" data-i18n="nav-mc-think">思考</a>
+                    <a href="#mc-arch" data-i18n="footer-mc-arch">架构</a>
+                    <a href="#mc-colony" data-i18n="footer-mc-colony">Colony</a>
+                    <a href="#mc-quickstart" data-i18n="footer-mc-qs">快速开始</a>
+                </div>
+                <div class="footer-col">
+                    <h5 data-i18n="footer-agent">MeowAgent</h5>
+                    <a href="agent.html" data-i18n="footer-agent-teaser">旗舰产品</a>
+                    <a href="agent.html" data-i18n="footer-agent-page">产品详情</a>
+                </div>
+                <div class="footer-col">
+                    <h5 data-i18n="footer-links">链接</h5>
+                    <a href="https://github.com/qyiun666/meowcat" target="_blank" data-i18n="footer-link-mc-gh">MeowCat GitHub</a>
+                    <a href="https://github.com/Axonant/MeowAgent" target="_blank" data-i18n="footer-link-ma-gh">MeowAgent GitHub</a>
+                    <a href="https://pypi.org/project/meowcat/" target="_blank" data-i18n="footer-link-pypi">PyPI</a>
+                    <a href="mailto:qyiun666@163.com" data-i18n="footer-link-email">Email</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer-bottom">Made with ❤️ · MeowCat & MeowAgent are open-source projects.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
