@@ -201,6 +201,9 @@
       'agent-coming-gh': '关注 GitHub',
       'agent-cta-home': '← 返回首页',
       'agent-cta-star': 'Star on GitHub',
+      'desk-page-title': 'MeowDesk — 智能桌面助手',
+      'desk-page-desc': 'MeowDesk — 基于 MeowCat 的智能桌面助手，敬请期待。',
+      'desk-title-sub': '智能桌面助手',
       'desk-hero-badge-text': 'Desktop Application · 桌面应用',
       'desk-loop-1-title': '桌面智能',
       'desk-loop-1-desc': '本地文件管理 · 智能搜索<br>跨应用工作流自动化',
@@ -425,6 +428,9 @@
       'agent-coming-gh': 'Follow on GitHub',
       'agent-cta-home': '← Back Home',
       'agent-cta-star': 'Star on GitHub',
+      'desk-page-title': 'MeowDesk — Smart Desktop Assistant',
+      'desk-page-desc': 'MeowDesk — Smart desktop assistant built on MeowAgent, coming soon.',
+      'desk-title-sub': 'Smart Desktop Assistant',
       'desk-hero-badge-text': 'Desktop Application · 桌面应用',
       'desk-loop-1-title': 'Desktop Intelligence',
       'desk-loop-1-desc': 'Local file management · Smart search<br>Cross-app workflow automation',
@@ -488,6 +494,18 @@
         el.innerHTML = data[key];
       }
     });
+    // 页面标题和 meta 描述
+    const pageTitleKey = document.documentElement.getAttribute('data-i18n-page-title');
+    if (pageTitleKey && data[pageTitleKey]) {
+      document.title = data[pageTitleKey];
+    }
+    const pageDescEl = document.querySelector('meta[name="description"]');
+    if (pageDescEl) {
+      const pageDescKey = pageDescEl.getAttribute('data-i18n-key');
+      if (pageDescKey && data[pageDescKey]) {
+        pageDescEl.setAttribute('content', data[pageDescKey]);
+      }
+    }
   }
 
   function updateToggleBtn(lang) {
