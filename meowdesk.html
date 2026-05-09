@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeowDesk — 智能桌面助手</title>
+    <meta name="description" content="MeowDesk — 基于 MeowCat 的智能桌面助手，敬请期待。">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar scrolled" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon-svg">
+                    <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+                        <circle cx="16" cy="16" r="15" stroke="url(#logoGrad)" stroke-width="2"/>
+                        <path d="M8 20c4-6 12-6 16 0" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="11" cy="13" r="2" fill="#a855f7"/><circle cx="21" cy="13" r="2" fill="#a855f7"/>
+                        <defs><linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#a855f7"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs>
+                    </svg>
+                </span>
+                <span class="logo-text" data-i18n="logo">MeowAgent</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" data-i18n="nav-home">首页</a>
+                <div class="nav-dropdown">
+                    <a href="framework.html" class="nav-dropdown-toggle" data-i18n="nav-meowcat">MeowCat</a>
+                    <div class="nav-dropdown-menu">
+                        <a href="framework.html#mc-why" data-i18n="nav-mc-why">为什么</a>
+                        <a href="framework.html#mc-think" data-i18n="nav-mc-think">思考</a>
+                        <a href="framework.html#mc-arch" data-i18n="nav-mc-arch">架构</a>
+                        <a href="framework.html#mc-features" data-i18n="nav-mc-features">亮点</a>
+                        <a href="framework.html#mc-colony" data-i18n="nav-mc-colony">Colony</a>
+                        <a href="framework.html#mc-quickstart" data-i18n="nav-mc-quickstart">快速开始</a>
+                    </div>
+                </div>
+                <a href="agent.html" data-i18n="nav-agent">MeowAgent</a>
+                <a href="meowdesk.html" class="active" data-i18n="nav-meowdesk">MeowDesk</a>
+                <a href="index.html#contact" data-i18n="nav-contact">联系我们</a>
+            </div>
+            <div class="nav-actions">
+                <button class="lang-toggle" id="langToggle" title="Switch Language">
+                    <span class="lang-label">EN</span>
+                </button>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="菜单">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== MeowDesk 主视觉 ===== -->
+    <section class="agent-hero-page">
+        <div class="agent-hero-bg">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <canvas id="agentParticles"></canvas>
+        </div>
+        <div class="container">
+            <div class="agent-hero-content">
+                <div class="agent-hero-badge">
+                    <span class="badge-dot pulse-cyan"></span>
+                    <span data-i18n="desk-hero-badge-text">Desktop Application · 桌面应用</span>
+                </div>
+                <h1 class="agent-hero-title">
+                    <span class="agent-title-main" style="background:linear-gradient(135deg,#fff 0%,#d4fcdc 30%,#5eead4 60%,#a855f7 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">MeowDesk</span>
+                    <span class="agent-title-sub">Smart Desktop Assistant</span>
+                </h1>
+
+                <div class="agent-hero-illustration">
+                    <svg viewBox="0 0 480 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="gradDesk" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#10b981"/><stop offset="1" stop-color="#6366f1"/></linearGradient>
+                            <radialGradient id="glowDesk" cx="50%" cy="50%" r="50%"><stop stop-color="rgba(16,185,129,.06)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+                        </defs>
+                        <circle cx="240" cy="130" r="120" fill="url(#glowDesk)"/>
+                        <rect x="120" y="80" width="240" height="140" rx="16" fill="rgba(16,185,129,.04)" stroke="rgba(16,185,129,.15)" stroke-width="1.5"/>
+                        <rect x="140" y="100" width="200" height="100" rx="8" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+                        <rect x="152" y="112" width="60" height="8" rx="4" fill="rgba(16,185,129,.15)"/>
+                        <rect x="152" y="128" width="80" height="6" rx="3" fill="rgba(255,255,255,.06)"/>
+                        <rect x="152" y="140" width="70" height="6" rx="3" fill="rgba(255,255,255,.04)"/>
+                        <rect x="152" y="152" width="90" height="6" rx="3" fill="rgba(255,255,255,.04)"/>
+                        <rect x="152" y="164" width="50" height="6" rx="3" fill="rgba(255,255,255,.03)"/>
+                        <circle cx="280" cy="150" r="22" fill="rgba(16,185,129,.06)" stroke="rgba(16,185,129,.2)" stroke-width="1.5"/>
+                        <text x="280" y="155" text-anchor="middle" fill="#34d399" font-size="16" font-weight="800" font-family="Inter,sans-serif">D</text>
+                        <circle cx="320" cy="105" r="4" fill="rgba(16,185,129,.18)"/>
+                        <circle cx="175" cy="195" r="3" fill="rgba(255,255,255,.06)"/>
+                        <circle cx="305" cy="195" r="3" fill="rgba(255,255,255,.06)"/>
+                        <text x="240" y="260" text-anchor="middle" fill="rgba(255,255,255,.18)" font-size="9" letter-spacing="3" font-family="Inter,sans-serif">SMART DESKTOP · AI POWERED · MEOWCAT</text>
+                    </svg>
+                </div>
+
+                <div class="agent-loops">
+                    <div class="agent-loop">
+                        <span class="loop-num">01</span>
+                        <h4 data-i18n="desk-loop-1-title">桌面智能</h4>
+                        <p data-i18n="desk-loop-1-desc">本地文件管理 · 智能搜索<br>跨应用工作流自动化</p>
+                    </div>
+                    <div class="agent-loop">
+                        <span class="loop-num">02</span>
+                        <h4 data-i18n="desk-loop-2-title">上下文感知</h4>
+                        <p data-i18n="desk-loop-2-desc">理解当前桌面环境<br>自然语言操控桌面</p>
+                    </div>
+                    <div class="agent-loop">
+                        <span class="loop-num">03</span>
+                        <h4 data-i18n="desk-loop-3-title">安全沙箱</h4>
+                        <p data-i18n="desk-loop-3-desc">Amygdala 安全旁路<br>操作可控 · 权限分级</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 即将上线 -->
+    <section class="agent-coming-soon" style="text-align:center;padding:80px 0">
+        <div class="container container-sm">
+            <div class="coming-soon-ring">
+                <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                    <circle cx="40" cy="40" r="36" stroke="rgba(16,185,129,.15)" stroke-width="2"/>
+                    <circle cx="40" cy="40" r="36" stroke="url(#csGradDesk)" stroke-width="2" stroke-dasharray="226" stroke-dashoffset="56" stroke-linecap="round" style="animation: csSpin 3s linear infinite; transform-origin: center"/>
+                    <text x="40" y="45" text-anchor="middle" fill="#34d399" font-size="18" font-weight="800" font-family="Inter,sans-serif">!</text>
+                    <defs><linearGradient id="csGradDesk" x1="0" y1="0" x2="80" y2="80"><stop stop-color="#10b981"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs>
+                </svg>
+            </div>
+            <h2 data-i18n="desk-coming-title">即将上线，敬请期待</h2>
+            <p data-i18n="desk-coming-desc">MeowDesk 正在基于 <strong>MeowCat</strong> 积极开发中</p>
+            <p class="agent-tease" data-i18n="desk-coming-tease">智能桌面助手 · 文件管理 · 跨应用自动化 · 自然语言操控</p>
+            <div class="agent-actions">
+                <a href="https://github.com/qyiun666/meowcat" target="_blank" class="btn btn-primary btn-lg">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    <span data-i18n="desk-coming-gh">MeowCat GitHub</span>
+                </a>
+                <a href="index.html" class="btn btn-outline btn-lg" data-i18n="agent-cta-home">← 返回首页</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="content-section" style="text-align:center;padding:60px 0">
+        <div class="container">
+            <div class="agent-cta-row" style="justify-content:center">
+                <a href="index.html" class="btn btn-outline btn-lg" data-i18n="agent-cta-home">← 返回首页</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-brand">
+                    <div class="footer-logo"><span>🐱</span> <span data-i18n="footer-logo">MeowAgent</span></div>
+                    <p class="footer-tagline" data-i18n="footer-tagline">Think in Layers. Build with Joy.<br>Bio-Neural AI Agent Framework</p>
+                    <p class="footer-license">MIT License · © 2026</p>
+                </div>
+                <div class="footer-col">
+                    <h5 data-i18n="footer-mc">MeowCat 框架</h5>
+                    <a href="framework.html#mc-why" data-i18n="footer-mc-why">为什么</a>
+                    <a href="framework.html#mc-think" data-i18n="nav-mc-think">思考</a>
+                    <a href="framework.html#mc-arch" data-i18n="footer-mc-arch">架构</a>
+                    <a href="framework.html#mc-colony" data-i18n="footer-mc-colony">Colony</a>
+                    <a href="framework.html#mc-quickstart" data-i18n="footer-mc-qs">快速开始</a>
+                </div>
+                <div class="footer-col">
+                    <h5 data-i18n="footer-products">产品</h5>
+                    <a href="agent.html" data-i18n="footer-agent-teaser">旗舰产品</a>
+                    <a href="agent.html" data-i18n="footer-agent-page">产品详情</a>
+                    <a href="meowdesk.html" data-i18n="footer-meowdesk">MeowDesk</a>
+                </div>
+                <div class="footer-col">
+                    <h5 data-i18n="footer-links">链接</h5>
+                    <a href="https://github.com/qyiun666/meowcat" target="_blank" data-i18n="footer-link-mc-gh">MeowCat GitHub</a>
+                    <a href="https://github.com/Axonant/MeowAgent" target="_blank" data-i18n="footer-link-ma-gh">MeowAgent GitHub</a>
+                    <a href="https://pypi.org/project/meowcat/" target="_blank" data-i18n="footer-link-pypi">PyPI</a>
+                    <a href="mailto:qyiun666@163.com" data-i18n="footer-link-email">Email</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer-bottom">Made with ❤️ · MeowCat & MeowAgent are open-source projects.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
