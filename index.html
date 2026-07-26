@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MeowAgent — Think in Layers, Build with Joy</title>
-    <meta name="description" content="MeowAgent 旗舰 AI 助手 · 基于 MeowCat 生物神经框架 · 双脑路由 · 纠缠图记忆 · 自生长">
+    <meta name="description" content="MemHop 认知记忆引擎 × MeowAgent 仿生 Agent 平台 · 六层记忆 · Dream 整合 · 纯 Go · MIT 开源">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -37,6 +37,17 @@
                         <a href="framework.html#mc-quickstart" data-i18n="nav-mc-quickstart">快速开始</a>
                     </div>
                 </div>
+                <div class="nav-dropdown">
+                    <a href="memhop.html" class="nav-dropdown-toggle" data-i18n="nav-memhop">MemHop</a>
+                    <div class="nav-dropdown-menu">
+                        <a href="memhop.html#mh-why" data-i18n="nav-mh-why">为什么</a>
+                        <a href="memhop.html#mh-think" data-i18n="nav-mh-think">思考</a>
+                        <a href="memhop.html#mh-arch" data-i18n="nav-mh-arch">架构</a>
+                        <a href="memhop.html#mh-features" data-i18n="nav-mh-features">亮点</a>
+                        <a href="memhop.html#mh-dream" data-i18n="nav-mh-dream">Dream</a>
+                        <a href="memhop.html#mh-quickstart" data-i18n="nav-mh-quickstart">快速开始</a>
+                    </div>
+                </div>
                 <a href="agent.html" data-i18n="nav-agent">MeowAgent</a>
                 <a href="meowdesk.html" data-i18n="nav-meowdesk">MeowDesk</a>
                 <a href="#contact" data-i18n="nav-contact">联系我们</a>
@@ -64,24 +75,24 @@
         <div class="hero-content">
             <div class="hero-badge">
                 <span class="badge-dot"></span>
-                <span data-i18n="hero-badge">MeowCat Bio-Neural 框架</span>
+                <span data-i18n="hero-badge-memhop">MemHop 认知记忆引擎</span>
                 <span class="hero-badge-sep">×</span>
-                <span data-i18n="hero-badge-agent">MeowAgent 旗舰应用</span>
+                <span data-i18n="hero-badge-agent">MeowAgent 仿生 Agent</span>
                 <span class="hero-badge-sep">×</span>
                 <span data-i18n="hero-badge-desk">MeowDesk 桌面助手</span>
             </div>
             <h1 class="hero-title">
                 <span class="title-block">
-                    <span class="title-emoji">🐱</span>
-                    <span class="title-gradient">MeowCat</span>
+                    <span class="title-emoji">🧠</span>
+                    <span class="title-gradient title-gradient-2">MemHop</span>
                 </span>
                 <span class="title-plus">×</span>
                 <span class="title-block">
-                    <span class="title-gradient title-gradient-2">MeowAgent</span>
+                    <span class="title-gradient title-gradient-3">MeowAgent</span>
                 </span>
                 <span class="title-plus">×</span>
                 <span class="title-block">
-                    <span class="title-gradient title-gradient-3">MeowDesk</span>
+                    <span class="title-gradient title-gradient-4">MeowDesk</span>
                 </span>
             </h1>
             <p class="hero-tagline" id="heroTagline" data-i18n="hero-tagline">&nbsp;</p>
@@ -90,15 +101,15 @@
                 <strong>20 个器官</strong> · <strong>双脑路由</strong> · <strong>纠缠图记忆</strong> · <strong>MIT 开源</strong>
             </p>
             <div class="hero-actions">
-                <a href="framework.html#mc-quickstart" class="btn btn-primary btn-lg" data-i18n="hero-cta1">🚀 快速开始</a>
-                <a href="framework.html" class="btn btn-glass btn-lg" data-i18n="hero-cta2">了解框架</a>
+                <a href="memhop.html#mh-quickstart" class="btn btn-primary btn-lg" data-i18n="hero-cta1">🚀 快速开始</a>
+                <a href="agent.html" class="btn btn-glass btn-lg" data-i18n="hero-cta2">了解平台</a>
             </div>
             <div class="hero-stats">
-                <div class="stat-item"><span class="stat-value">20</span><span class="stat-label" data-i18n="stat-organs">器官</span></div>
-                <div class="stat-divider"></div>
                 <div class="stat-item"><span class="stat-value">6</span><span class="stat-label" data-i18n="stat-memory">层记忆</span></div>
                 <div class="stat-divider"></div>
-                <div class="stat-item"><span class="stat-value">4</span><span class="stat-label" data-i18n="stat-signal">层信号</span></div>
+                <div class="stat-item"><span class="stat-value">4</span><span class="stat-label" data-i18n="stat-organs">器官管道</span></div>
+                <div class="stat-divider"></div>
+                <div class="stat-item"><span class="stat-value">5</span><span class="stat-label" data-i18n="stat-signal">Dream 阶段</span></div>
                 <div class="stat-divider"></div>
                 <div class="stat-item"><span class="stat-value">MIT</span><span class="stat-label" data-i18n="stat-license">开源许可</span></div>
             </div>
@@ -147,15 +158,15 @@
         <div class="container">
             <h2 style="font-size:28px;font-weight:800;color:#fff;margin-bottom:32px" data-i18n="quick-section-title">探索更多</h2>
             <div class="quick-links">
-                <a href="framework.html" class="quick-link-card">
-                    <span class="ql-icon">🐱</span>
-                    <span class="ql-title" data-i18n="ql-mc-title">MeowCat 框架</span>
-                    <span class="ql-desc" data-i18n="ql-mc-desc">20 器官 · Slot-Plug · Colony</span>
+                <a href="memhop.html" class="quick-link-card">
+                    <span class="ql-icon">🧠</span>
+                    <span class="ql-title" data-i18n="ql-mh-title">MemHop 引擎</span>
+                    <span class="ql-desc" data-i18n="ql-mh-desc">六层认知 · Dream · RRF · .meh</span>
                 </a>
                 <a href="agent.html" class="quick-link-card">
                     <span class="ql-icon">🤖</span>
                     <span class="ql-title" data-i18n="ql-ma-title">MeowAgent 旗舰</span>
-                    <span class="ql-desc" data-i18n="ql-ma-desc">双脑路由 · 纠缠记忆 · 自生长</span>
+                    <span class="ql-desc" data-i18n="ql-ma-desc">4 器官 · 双循环 · Colony</span>
                 </a>
                 <a href="meowdesk.html" class="quick-link-card">
                     <span class="ql-icon">🖥️</span>
@@ -185,10 +196,10 @@
                     <h4 data-i18n="contact-wechat">微信群</h4>
                     <div class="wechat-qr"><img src="wechat.jpg" alt="微信群二维码" width="180" height="180"></div>
                 </div>
-                <a href="https://github.com/qyiun666/meowcat" target="_blank" class="contact-card">
-                    <span class="cc-icon">📦</span>
-                    <h4 data-i18n="contact-mc-gh-title">MeowCat GitHub</h4>
-                    <p data-i18n="contact-mc-gh">框架源码 · MIT</p>
+                <a href="https://github.com/qyiun666/MemHop" target="_blank" class="contact-card">
+                    <span class="cc-icon">🧠</span>
+                    <h4 data-i18n="contact-mh-gh-title">MemHop GitHub</h4>
+                    <p data-i18n="contact-mh-gh">记忆引擎源码 · MIT+Apache</p>
                 </a>
                 <a href="https://github.com/Axonant/MeowAgent" target="_blank" class="contact-card">
                     <span class="cc-icon">🤖</span>
@@ -209,12 +220,12 @@
                     <p class="footer-license">MIT License · © 2026</p>
                 </div>
                 <div class="footer-col">
-                    <h5 data-i18n="footer-mc">MeowCat 框架</h5>
-                    <a href="framework.html#mc-why" data-i18n="footer-mc-why">为什么</a>
-                    <a href="framework.html#mc-think" data-i18n="nav-mc-think">思考</a>
-                    <a href="framework.html#mc-arch" data-i18n="footer-mc-arch">架构</a>
-                    <a href="framework.html#mc-colony" data-i18n="footer-mc-colony">Colony</a>
-                    <a href="framework.html#mc-quickstart" data-i18n="footer-mc-qs">快速开始</a>
+                    <h5 data-i18n="footer-memhop">MemHop 引擎</h5>
+                    <a href="memhop.html#mh-why" data-i18n="footer-mh-why">为什么</a>
+                    <a href="memhop.html#mh-think" data-i18n="nav-mh-think">思考</a>
+                    <a href="memhop.html#mh-arch" data-i18n="footer-mh-arch">架构</a>
+                    <a href="memhop.html#mh-dream" data-i18n="footer-mh-dream">Dream</a>
+                    <a href="memhop.html#mh-quickstart" data-i18n="footer-mh-qs">快速开始</a>
                 </div>
                 <div class="footer-col">
                     <h5 data-i18n="footer-products">产品</h5>
@@ -224,9 +235,9 @@
                 </div>
                 <div class="footer-col">
                     <h5 data-i18n="footer-links">链接</h5>
-                    <a href="https://github.com/qyiun666/meowcat" target="_blank" data-i18n="footer-link-mc-gh">MeowCat GitHub</a>
+                    <a href="https://github.com/qyiun666/MemHop" target="_blank" data-i18n="footer-link-mh-gh">MemHop GitHub</a>
                     <a href="https://github.com/Axonant/MeowAgent" target="_blank" data-i18n="footer-link-ma-gh">MeowAgent GitHub</a>
-                    <a href="https://pypi.org/project/meowcat/" target="_blank" data-i18n="footer-link-pypi">PyPI</a>
+                    <a href="https://github.com/qyiun666/meowcat" target="_blank" data-i18n="footer-link-mc-gh">MeowCat GitHub</a>
                     <a href="mailto:qyiun666@163.com" data-i18n="footer-link-email">Email</a>
                 </div>
             </div>

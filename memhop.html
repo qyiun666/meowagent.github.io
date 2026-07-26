@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemHop 认知记忆引擎 — Cognitive Memory Engine</title>
+    <meta name="description" content="MemHop 引擎详解：六层认知架构、三通道 RRF 检索、Dream 整合管道、V2 .meh 存储、单实例设计">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        .bench-table-wrap{overflow-x:auto;border-radius:var(--r-md);border:1px solid rgba(147,51,234,.12);margin-top:24px}
+        .bench-table{width:100%;border-collapse:collapse;font-size:14px}
+        .bench-table th{padding:14px 16px;text-align:left;font-weight:700;color:var(--purple-300);background:rgba(147,51,234,.06);border-bottom:1px solid rgba(147,51,234,.15);white-space:nowrap}
+        .bench-table td{padding:12px 16px;color:rgba(255,255,255,.6);border-bottom:1px solid rgba(255,255,255,.04);white-space:nowrap}
+        .bench-table tr:last-child td{border-bottom:none}
+        .bench-table tr.highlight td{color:#fff;font-weight:600;background:rgba(147,51,234,.04)}
+        .bench-table tr.highlight td:first-child{color:var(--purple-300)}
+        .bench-note{font-size:12px;color:rgba(255,255,255,.3);margin-top:14px;line-height:1.7}
+        .bench-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+        .bench-metric{padding:20px;border-radius:var(--r-md);background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);text-align:center}
+        .bench-metric .bm-val{font-size:26px;font-weight:800;color:var(--purple-300);font-family:'JetBrains Mono',monospace}
+        .bench-metric .bm-label{font-size:12px;color:rgba(255,255,255,.4);margin-top:6px;letter-spacing:.5px}
+        @media(max-width:768px){.bench-metrics{grid-template-columns:repeat(2,1fr)}.bench-table{font-size:12px}}
+    </style>
+</head>
+<body>
+    <nav class="navbar scrolled" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon-svg">
+                    <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+                        <circle cx="16" cy="16" r="15" stroke="url(#logoGrad)" stroke-width="2"/>
+                        <path d="M8 20c4-6 12-6 16 0" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="11" cy="13" r="2" fill="#a855f7"/><circle cx="21" cy="13" r="2" fill="#a855f7"/>
+                        <defs><linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#a855f7"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs>
+                    </svg>
+                </span>
+                <span class="logo-text" data-i18n="logo">MeowAgent</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" data-i18n="nav-home">首页</a>
+                <div class="nav-dropdown">
+                    <a href="framework.html" class="nav-dropdown-toggle" data-i18n="nav-meowcat">MeowCat</a>
+                    <div class="nav-dropdown-menu">
+                        <a href="framework.html#mc-why" data-i18n="nav-mc-why">为什么</a>
+                        <a href="framework.html#mc-think" data-i18n="nav-mc-think">思考</a>
+                        <a href="framework.html#mc-arch" data-i18n="nav-mc-arch">架构</a>
+                        <a href="framework.html#mc-features" data-i18n="nav-mc-features">亮点</a>
+                        <a href="framework.html#mc-colony" data-i18n="nav-mc-colony">Colony</a>
+                        <a href="framework.html#mc-quickstart" data-i18n="nav-mc-quickstart">快速开始</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <a href="memhop.html" class="nav-dropdown-toggle active" data-i18n="nav-memhop">MemHop</a>
+                    <div class="nav-dropdown-menu">
+                        <a href="#mh-why" data-i18n="nav-mh-why">为什么</a>
+                        <a href="#mh-think" data-i18n="nav-mh-think">思考</a>
+                        <a href="#mh-arch" data-i18n="nav-mh-arch">架构</a>
+                        <a href="#mh-features" data-i18n="nav-mh-features">亮点</a>
+                        <a href="#mh-dream" data-i18n="nav-mh-dream">Dream</a>
+                        <a href="#mh-quickstart" data-i18n="nav-mh-quickstart">快速开始</a>
+                    </div>
+                </div>
+                <a href="agent.html" data-i18n="nav-agent">MeowAgent</a>
+                <a href="meowdesk.html" data-i18n="nav-meowdesk">MeowDesk</a>
+                <a href="index.html#contact" data-i18n="nav-contact">联系我们</a>
+            </div>
+            <div class="nav-actions">
+                <button class="lang-toggle" id="langToggle" title="Switch Language">
+                    <span class="lang-label">EN</span>
+                </button>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="菜单">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-hero">
+        <div class="container">
+            <span class="section-tag" data-i18n="mh-hero-tag">引擎详解</span>
+            <h1 class="page-title" data-i18n="mh-hero-title">MemHop 认知记忆引擎</h1>
+            <p class="page-subtitle" data-i18n="mh-hero-subtitle">像人脑一样组织记忆 — 身份、情景回忆、语义压缩、技能习得、归档存储、结晶专长</p>
+            <div class="page-meta">
+                <span class="meta-badge" data-i18n="mh-hero-meta1">Go 1.26+</span>
+                <span class="meta-badge" data-i18n="mh-hero-meta2">MIT OR Apache-2.0</span>
+                <span class="meta-badge" data-i18n="mh-hero-meta3">4 Direct Deps</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 一句话定位 -->
+    <section class="content-section">
+        <div class="container container-sm">
+            <h2 data-i18n="mh-quote-heading">一句话定位</h2>
+            <div class="quote-box">
+                <p data-i18n="mh-quote">MemHop 不是向量数据库，而是<strong>模仿人脑组织知识的记忆系统</strong> — 有身份、情景回忆、语义压缩、技能习得、归档存储和结晶专长。一个 Agent，一个 .meh 文件，零基础设施。</p>
+                <p class="quote-sub" data-i18n="mh-quote-sub">纯 Go，4 个直接依赖，无 cgo，无外部服务（除 embedding/LLM 端点）</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why -->
+    <section class="content-section content-alt">
+        <div class="container">
+            <div class="mc-subsection" id="mh-why">
+                <h3 class="mc-subtitle" data-i18n="mh-why-title">为什么需要认知记忆？</h3>
+                <div class="compare-philosophy">
+                    <div class="philosophy-col">
+                        <h4 class="philosophy-label bad" data-i18n="mh-why-vector">❌ 传统向量数据库</h4>
+                        <div class="philosophy-card">
+                            <p data-i18n="mh-why-vector-desc">bolt-on 向量插件或 plain-text log 塞进 context window。Agent 没有内化记忆 = 无状态函数伪装智能。</p>
+                        </div>
+                    </div>
+                    <div class="philosophy-vs"><span>VS</span></div>
+                    <div class="philosophy-col">
+                        <h4 class="philosophy-label good" data-i18n="mh-why-cognitive">✅ MemHop 认知记忆</h4>
+                        <div class="philosophy-card philosophy-card-good">
+                            <p data-i18n="mh-why-cognitive-desc">记忆必须是认知的 — 结构化、压缩、整合、遗忘，像人脑一样；且嵌入式的 — 存活在 Agent 进程内，而非网络调用之后。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Think -->
+    <section class="content-section">
+        <div class="container">
+            <div class="mc-subsection" id="mh-think">
+                <h3 class="mc-subtitle" data-i18n="mh-think-title">核心设计思想</h3>
+                <p class="mc-subdesc" data-i18n="mh-think-desc">记忆不是事后补丁，而是 Agent 智能的基础</p>
+                <div class="think-grid">
+                    <div class="think-card">
+                        <div class="think-icon">🧠</div>
+                        <h4 data-i18n="mh-think-1-title">认知 &gt; 向量</h4>
+                        <p data-i18n="mh-think-1-desc">六层认知架构，从身份到结晶技能，模拟人脑的记忆层级。不是扁平向量库的相似度匹配。</p>
+                    </div>
+                    <div class="think-card">
+                        <div class="think-icon">🔌</div>
+                        <h4 data-i18n="mh-think-2-title">嵌入式 &gt; 服务化</h4>
+                        <p data-i18n="mh-think-2-desc">一个 .meh 文件，零基础设施。MemHop 作为嵌入式器官运行在 Agent 进程内，无需启动服务器。</p>
+                    </div>
+                    <div class="think-card">
+                        <div class="think-icon">💤</div>
+                        <h4 data-i18n="mh-think-3-title">整合 &gt; 堆叠</h4>
+                        <p data-i18n="mh-think-3-desc">Dream 休眠整合：压缩、重建、衰减、画像。睡眠后记忆更清晰，而非不断堆叠 token。</p>
+                    </div>
+                    <div class="think-card">
+                        <div class="think-icon">🗑️</div>
+                        <h4 data-i18n="mh-think-4-title">遗忘 &gt; 全记</h4>
+                        <p data-i18n="mh-think-4-desc">基于重要性的衰减，而非基于时间。弱连接修剪，强关联保留。像人脑一样遗忘无关细节。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 六层认知架构 -->
+    <section class="content-section content-alt">
+        <div class="container container-sm">
+            <div class="mc-subsection" id="mh-arch">
+                <h3 class="mc-subtitle" data-i18n="mh-arch-title">六层认知架构</h3>
+                <p class="mc-subdesc" data-i18n="mh-arch-desc">从身份到结晶技能，每层有明确的人脑对应机制</p>
+                <div class="signal-layers">
+                    <div class="signal-layer">
+                        <div class="sl-num">L0</div>
+                        <div class="sl-body">
+                            <h4 data-i18n="mh-layer-l0-name">L0 Profile 身份</h4>
+                            <p data-i18n="mh-layer-l0-desc">Agent 人格、偏好与语言习惯</p>
+                        </div>
+                    </div>
+                    <div class="signal-layer">
+                        <div class="sl-num">L1</div>
+                        <div class="sl-body">
+                            <h4 data-i18n="mh-layer-l1-name">L1 Engram 关联超图</h4>
+                            <p data-i18n="mh-layer-l1-desc">链接 L2 上下文的超图骨架</p>
+                        </div>
+                    </div>
+                    <div class="signal-layer">
+                        <div class="sl-num">L2</div>
+                        <div class="sl-body">
+                            <h4 data-i18n="mh-layer-l2-name">L2 Context 工作记忆</h4>
+                            <p data-i18n="mh-layer-l2-desc">压缩的主题结构（4 级深度）</p>
+                        </div>
+                    </div>
+                    <div class="signal-layer">
+                        <div class="sl-num">L3</div>
+                        <div class="sl-body">
+                            <h4 data-i18n="mh-layer-l3-name">L3 Knowledge 语义记忆</h4>
+                            <p data-i18n="mh-layer-l3-desc">多源超图知识库 + 社区检测</p>
+                        </div>
+                    </div>
+                    <div class="signal-layer">
+                        <div class="sl-num">L4</div>
+                        <div class="sl-body">
+                            <h4 data-i18n="mh-layer-l4-name">L4 Archive 长期记忆</h4>
+                            <p data-i18n="mh-layer-l4-desc">原始对话日志与历史记录</p>
+                        </div>
+                    </div>
+                    <div class="signal-layer">
+                        <div class="sl-num">L5</div>
+                        <div class="sl-body">
+                            <h4 data-i18n="mh-layer-l5-name">L5 Crystal 肌肉记忆</h4>
+                            <p data-i18n="mh-layer-l5-desc">结晶化程序与可复用技能</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="content-section">
+        <div class="container container-sm">
+            <div class="mc-subsection" id="mh-features">
+                <h3 class="mc-subtitle" data-i18n="mh-feat-title">三通道 RRF · Dream · .meh 存储 · 单实例</h3>
+                <div class="feature-cards-sm" style="margin-top:24px">
+                    <div class="fcs">
+                        <h4 data-i18n="mh-feat-1">🔀 三通道 RRF 检索</h4>
+                        <p data-i18n="mh-feat-1-desc">BM25 (gse CJK) + f16 向量 (Ollama) + 实体模糊匹配，RRF(k=60) 融合</p>
+                    </div>
+                    <div class="fcs">
+                        <h4 data-i18n="mh-feat-2">💤 Dream 整合管道</h4>
+                        <p data-i18n="mh-feat-2-desc">五阶段 L0-L2 整合：压缩→重建→衰减→画像→蒸馏，每次最多 3 次 LLM 调用</p>
+                    </div>
+                    <div class="fcs">
+                        <h4 data-i18n="mh-feat-3">💾 V2 .meh 存储</h4>
+                        <p data-i18n="mh-feat-3-desc">A/B 双头 + CRC32 + 断电恢复 + mmap 零拷贝 + 快照/检查点</p>
+                    </div>
+                    <div class="fcs">
+                        <h4 data-i18n="mh-feat-4">🔒 单实例设计</h4>
+                        <p data-i18n="mh-feat-4-desc">一个 Agent = 一个 .meh 文件，跨平台文件锁（Linux/macOS/Windows）</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dream Pipeline -->
+    <section class="content-section content-alt">
+        <div class="container container-sm">
+            <h2 data-i18n="mh-dream-heading">Dream 整合管道</h2>
+            <p class="section-intro" data-i18n="mh-dream-intro">受人脑睡眠处理经验启发，自动记忆整合流程。仅作用于 L0-L2（L3 蒸馏与 L5 结晶不在范围内）</p>
+            <div class="signal-layers">
+                <div class="signal-layer">
+                    <div class="sl-num">01</div>
+                    <div class="sl-body">
+                        <h4 data-i18n="mh-dream-1-name">L2 压缩</h4>
+                        <p data-i18n="mh-dream-1-desc">LLM 分组并合并相关主题，降级过时上下文</p>
+                    </div>
+                </div>
+                <div class="signal-layer">
+                    <div class="sl-num">02</div>
+                    <div class="sl-body">
+                        <h4 data-i18n="mh-dream-2-name">L1 重建</h4>
+                        <p data-i18n="mh-dream-2-desc">重建链接 L2 上下文的超图骨架</p>
+                    </div>
+                </div>
+                <div class="signal-layer">
+                    <div class="sl-num">03</div>
+                    <div class="sl-body">
+                        <h4 data-i18n="mh-dream-3-name">L1 衰减</h4>
+                        <p data-i18n="mh-dream-3-desc">衰减情景重要性，修剪弱节点/边</p>
+                    </div>
+                </div>
+                <div class="signal-layer">
+                    <div class="sl-num">04</div>
+                    <div class="sl-body">
+                        <h4 data-i18n="mh-dream-4-name">L0 画像</h4>
+                        <p data-i18n="mh-dream-4-desc">从整合后的记忆重新生成 Agent 画像</p>
+                    </div>
+                </div>
+                <div class="signal-layer">
+                    <div class="sl-num">05</div>
+                    <div class="sl-body">
+                        <h4 data-i18n="mh-dream-5-name">L0 蒸馏</h4>
+                        <p data-i18n="mh-dream-5-desc">蒸馏情绪/MBTI 模式（可选，SkipDistill）</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benchmark -->
+    <section class="content-section">
+        <div class="container">
+            <h2 data-i18n="mh-bench-heading">Benchmark</h2>
+            <p class="section-intro" data-i18n="mh-bench-intro">在 LOCOMO10 (ACL 2024) 上测试 — 419 轮对话存储，199 个 QA 查询</p>
+            <div class="bench-metrics">
+                <div class="bench-metric">
+                    <div class="bm-val">100%</div>
+                    <div class="bm-label" data-i18n="mh-bench-r1">Recall@1</div>
+                </div>
+                <div class="bench-metric">
+                    <div class="bm-val">100%</div>
+                    <div class="bm-label" data-i18n="mh-bench-r3">Recall@3</div>
+                </div>
+                <div class="bench-metric">
+                    <div class="bm-val">100%</div>
+                    <div class="bm-label" data-i18n="mh-bench-r5">Recall@5</div>
+                </div>
+                <div class="bench-metric">
+                    <div class="bm-val">3.97s</div>
+                    <div class="bm-label" data-i18n="mh-bench-latency">P95 延迟</div>
+                </div>
+                <div class="bench-metric">
+                    <div class="bm-val">.meh</div>
+                    <div class="bm-label" data-i18n="mh-bench-deploy">部署</div>
+                </div>
+                <div class="bench-metric">
+                    <div class="bm-val">Go</div>
+                    <div class="bm-label" data-i18n="mh-bench-lang">语言</div>
+                </div>
+            </div>
+            <div class="bench-table-wrap">
+                <table class="bench-table">
+                    <thead>
+                        <tr>
+                            <th>System</th>
+                            <th>GitHub Stars</th>
+                            <th>LOCOMO</th>
+                            <th>LongMemEval</th>
+                            <th data-i18n="mh-bench-r5">Recall@5</th>
+                            <th data-i18n="mh-bench-latency">P95 延迟</th>
+                            <th data-i18n="mh-bench-deploy">部署</th>
+                            <th data-i18n="mh-bench-lang">语言</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight">
+                            <td>MemHop</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>100% ²</td>
+                            <td>3.97s ¹</td>
+                            <td>Embedded .meh</td>
+                            <td>Go</td>
+                        </tr>
+                        <tr>
+                            <td>Mem0 2026</td>
+                            <td>~51k</td>
+                            <td>92.5%</td>
+                            <td>93.4%</td>
+                            <td>—</td>
+                            <td>1.44s</td>
+                            <td>SaaS/OSS</td>
+                            <td>Python</td>
+                        </tr>
+                        <tr>
+                            <td>Cognee</td>
+                            <td>~28k</td>
+                            <td>80.3%</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>OSS</td>
+                            <td>Python</td>
+                        </tr>
+                        <tr>
+                            <td>Letta</td>
+                            <td>~13k</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>OSS</td>
+                            <td>Python</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="bench-note" data-i18n="mh-bench-note">¹ 端到端延迟由 embedding 编码主导（Apple M2, Ollama bge-m3 CPU-only）；引擎侧三通道搜索本身仅需个位数毫秒。² LOCOMO10 子集检索召回率，不可与端到端 QA 准确率直接对比。</p>
+        </div>
+    </section>
+
+    <!-- Quick Start -->
+    <section class="content-section content-alt">
+        <div class="container">
+            <div class="mc-subsection" id="mh-quickstart">
+                <h3 class="mc-subtitle" data-i18n="mh-qs-title">快速开始</h3>
+                <p class="mc-subdesc" data-i18n="mh-qs-prereq">前置条件: Go 1.26+, Ollama (ollama pull qllama/bge-m3:q4_k_m), OpenAI 兼容 LLM 端点</p>
+                <div class="install-steps">
+                    <div class="install-step">
+                        <div class="step-number">01</div>
+                        <div class="step-content">
+                            <h4 data-i18n="mh-qs-step1">打开数据库</h4>
+                            <div class="code-block">
+                                <div class="code-header"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span><span class="code-label">Go</span><button class="copy-btn" onclick="copyCode(this)" data-i18n="code-copy-btn">复制</button></div>
+                                <pre><code>import (
+    "context"
+    "time"
+
+    memhop "github.com/qyiun666/MemHop/api"
+)
+
+db, err := memhop.Open(&amp;memhop.Config{
+    DBPath:      "agent.meh",
+    VectorDim:   768,
+    EncoderAddr: "http://127.0.0.1:11434",
+    EmbedModel:  "qllama/bge-m3:q4_k_m",
+    LLM: memhop.LlmConfig{
+        APIURL: "https://api.openai.com/v1",
+        APIKey: os.Getenv("OPENAI_API_KEY"),
+        Model:  "gpt-4o-mini",
+    },
+})
+if err != nil {
+    log.Fatal(err)
+}
+defer db.Close()</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="install-step">
+                        <div class="step-number">02</div>
+                        <div class="step-content">
+                            <h4 data-i18n="mh-qs-step2">搜索记忆</h4>
+                            <div class="code-block">
+                                <div class="code-header"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span><span class="code-label">Go</span><button class="copy-btn" onclick="copyCode(this)" data-i18n="code-copy-btn">复制</button></div>
+                                <pre><code>// Timestamp 为必填：消息的 Unix 毫秒时间戳
+results, _ := db.Search(memhop.SearchQuery{
+    Text:       "What did we discuss?",
+    Timestamp:  time.Now().UnixMilli(),
+    MaxResults: 10,
+})
+
+// 将 Agent 回复追加到 Search 创建的 topic
+_ = db.Update(results.NewTopicID, "Agent: ...", time.Now().UnixMilli())</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="install-step">
+                        <div class="step-number">03</div>
+                        <div class="step-content">
+                            <h4 data-i18n="mh-qs-step3">Dream 整合</h4>
+                            <div class="code-block">
+                                <div class="code-header"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span><span class="code-label">Go</span><button class="copy-btn" onclick="copyCode(this)" data-i18n="code-copy-btn">复制</button></div>
+                                <pre><code>// Dream 整合（L0-L2），每次最多 3 次 LLM 调用
+// 并发调用会被串行化（第二次返回 error），支持 ctx 取消
+report, _ := db.Dream(context.Background(), nil)
+log.Println(report)</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mc-cta-row">
+                    <a href="https://github.com/qyiun666/MemHop" target="_blank" class="btn btn-primary btn-lg">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        <span data-i18n="mh-cta-star">给个 Star ⭐</span>
+                    </a>
+                    <a href="https://github.com/qyiun666/MemHop" target="_blank" class="btn btn-glass btn-lg" data-i18n="mh-cta-github">GitHub 源码</a>
+                    <a href="agent.html" class="btn btn-outline btn-lg" data-i18n="mh-cta-agent">🤖 MeowAgent 平台</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-brand">
+                    <div class="footer-logo"><span>🐱</span> <span data-i18n="footer-logo">MeowAgent</span></div>
+                    <p class="footer-tagline" data-i18n="footer-tagline">Think in Layers. Build with Joy.<br>Bio-Neural AI Agent Framework</p>
+                    <p class="footer-license">MIT OR Apache-2.0 · © 2026</p>
+                </div>
+                <div class="footer-col">
+                    <h5 data-i18n="footer-mc">MeowCat 框架</h5>
+                    <a href="framework.html#mc-why" data-i18n="footer-mc-why">为什么</a>
+                    <a href="framework.html#mc-think" data-i18n="nav-mc-think">思考</a>
+                    <a href="framework.html#mc-arch" data-i18n="footer-mc-arch">架构</a>
+                    <a href="framework.html#mc-colony" data-i18n="footer-mc-colony">Colony</a>
+                    <a href="framework.html#mc-quickstart" data-i18n="footer-mc-qs">快速开始</a>
+                </div>
+                <div class="footer-col">
+                    <h5 data-i18n="footer-memhop">MemHop 引擎</h5>
+                    <a href="#mh-why" data-i18n="footer-mh-why">为什么</a>
+                    <a href="#mh-think" data-i18n="nav-mh-think">思考</a>
+                    <a href="#mh-arch" data-i18n="footer-mh-arch">架构</a>
+                    <a href="#mh-dream" data-i18n="footer-mh-dream">Dream</a>
+                    <a href="#mh-quickstart" data-i18n="footer-mh-qs">快速开始</a>
+                </div>
+                <div class="footer-col">
+                    <h5 data-i18n="footer-products">产品</h5>
+                    <a href="agent.html" data-i18n="footer-agent-teaser">旗舰产品</a>
+                    <a href="agent.html" data-i18n="footer-agent-page">产品详情</a>
+                    <a href="meowdesk.html" data-i18n="footer-meowdesk">MeowDesk</a>
+                </div>
+                <div class="footer-col">
+                    <h5 data-i18n="footer-links">链接</h5>
+                    <a href="https://github.com/qyiun666/MemHop" target="_blank" data-i18n="footer-link-mh-gh">MemHop GitHub</a>
+                    <a href="https://github.com/qyiun666/meowcat" target="_blank" data-i18n="footer-link-mc-gh">MeowCat GitHub</a>
+                    <a href="https://github.com/Axonant/MeowAgent" target="_blank" data-i18n="footer-link-ma-gh">MeowAgent GitHub</a>
+                    <a href="mailto:qyiun666@163.com" data-i18n="footer-link-email">Email</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer-bottom">Made with ❤️ · MeowCat, MemHop & MeowAgent are open-source projects.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
